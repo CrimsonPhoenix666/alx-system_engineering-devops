@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A recursive function that queries Reddit API for the total number of subscribers.
+A script to query the Reddit API for the total number of subscribers for a given subreddit.
 """
 
 import requests
@@ -13,7 +13,7 @@ def number_of_subscribers(subreddit):
         'User-Agent': user_agent
     }
 
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
     res = requests.get(url, headers=headers, allow_redirects=False)
 
     if res.status_code != 200:
@@ -36,3 +36,4 @@ if __name__ == "__main__":
     non_existing_subreddit = "this_is_a_fake_subreddit"
     result_non_existing = number_of_subscribers(non_existing_subreddit)
     print(f"Subscribers for {non_existing_subreddit}: {result_non_existing}")
+
