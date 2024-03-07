@@ -1,48 +1,37 @@
 #!/usr/bin/python3
 """
-A script to query the Reddit API for the total number of subscribers for a given subreddit.
+A recursive function that queries the Reddit API for the total number of subscribers for a given subreddit.
 """
-
 import requests
 
+
 def number_of_subscribers(subreddit):
-    """Queries the Reddit API for the total number of subscribers."""
-    user_agent = 'Mozilla/5.0'
+    """ Queries the Reddit API """
+    u_agent = 'Mozilla/5.0'
 
     headers = {
-        'User-Agent': user_agent
+        'User-Agent': u_agent
     }
 
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     res = requests.get(url, headers=headers, allow_redirects=False)
-
-    # Debugging statements
+    print(f"URL: {url}")
     print(f"Status Code: {res.status_code}")
-    print(f"Response Text: {res.text}")
 
-    try:
-        data = res.json()
-
-        # Debugging statement
-        print(f"JSON Data: {data}")
-
-        # Check if the 'data' and 'subscribers' keys are present
-        if 'data' in data and 'subscribers' in data['data']:
-            subscribers = data['data']['subscribers']
-            return subscribers
-        else:
-            return 0
-
-    except (KeyError, ValueError):
+    if res.status_code != 200:
         return 0
 
-if __name__ == "__main__":
-    # Test with an existing subreddit
-    existing_subreddit = "programming"
-    result_existing = number_of_subscribers(existing_subreddit)
-    print(f"Subscribers for {existing_subreddit}: {result_existing}")
+    dic = res.json()
+    print(f"JSON Response: {dic}")
 
-    # Test with a non-existing subreddit
-    non_existing_subreddit = "this_is_a_fake_subreddit"
-    result_non_existing = number_of_subscribers(non_existing_subreddit)
-    print(f"Subscribers for {non_existing_subreddit}: {result_non_existing}")
+    if 'data' not in dic:
+        return 0
+    if 'subscribers' not in dic.get('data'):
+        return 0
+
+    return dic['data']['subscribers']
+
+# Example usage:
+subreddit_name = "programming"
+result = number_of_subscribers(subreddit_name)
+print(f"Subscribers for {subreddit_name}: {result}")
