@@ -6,33 +6,25 @@ import requests
 
 
 def top_ten(subreddit):
-
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
     headers = {
         'User-Agent': 'Mozilla/5.0'
     }
-    params = {
-        'limit': 10
-    }
+    response = requests.get(url, headers=headers, allow_redirects=False)
+
+    if response.status_code != 200:
+        print(None)
+        return
 
     try:
-        response = requests.get(url,
-                                headers=headers,
-                                params=params,
-                                allow_redirects=False)
-        response.raise_for_status()  # Raise an HTTPError for bad responses
-
-        results = response.json().get("data", {}).get("children", [])
-
-        if not results:
-            print(None)
+        data = response.json()
+        # Check if 'data' key is present and 'children' is not empty
+        if 'data' in data and 'children' in data['data'] and data['data']['children']:
+            for post in data['data']['children']:
+                print(post['data']['title'])
         else:
-            for post in results:
-                title = post['data']['title']
-                print(title)
-
-    except requests.RequestException as e:
-        print(f"Error: {e}")
+            print(None)
+    except (KeyError, ValueError):
         print(None)
 
 if __name__ == "__main__":
@@ -42,3 +34,4 @@ if __name__ == "__main__":
         print("Please pass an argument for the subreddit to search.")
     else:
         top_ten(sys.argv[1])
+
