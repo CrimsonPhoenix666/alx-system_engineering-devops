@@ -34,7 +34,7 @@ def number_of_subscribers(subreddit):
         return 0
 
 if __name__ == "__main__":
-    from subs import number_of_subscribers
+    from 0-subs import number_of_subscribers
 
     # Test with an existing subreddit
     existing_subreddit = "programming"
@@ -51,3 +51,8 @@ if __name__ == "__main__":
     print(f"Subscribers for {non_existing_subreddit}: {result_non_existing}")
     print(f"Expected subscribers: {expected_non_existing}")
     print(f"Result matches expected: {result_non_existing == expected_non_existing}")
+
+    # Additional debug statements
+    print("Actual output lengths:")
+    print(f"Existing subreddit: {len(str(result_existing))}")
+    print(f"Non-existing subreddit: {len(str(result_non_existing))}")
