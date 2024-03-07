@@ -16,12 +16,15 @@ def number_of_subscribers(subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
     res = requests.get(url, headers=headers, allow_redirects=False)
 
-    # Check for a successful response
-    if res.status_code != 200:
-        return 0
+    # Debugging statements
+    print(f"Status Code: {res.status_code}")
+    print(f"Response Text: {res.text}")
 
     try:
         data = res.json()
+
+        # Debugging statement
+        print(f"JSON Data: {data}")
 
         # Check if the 'data' and 'subscribers' keys are present
         if 'data' in data and 'subscribers' in data['data']:
@@ -43,9 +46,3 @@ if __name__ == "__main__":
     non_existing_subreddit = "this_is_a_fake_subreddit"
     result_non_existing = number_of_subscribers(non_existing_subreddit)
     print(f"Subscribers for {non_existing_subreddit}: {result_non_existing}")
-
-    # Debug statements
-    print("Actual output lengths:")
-    print(f"Existing subreddit: {len(str(result_existing))}")
-    print(f"Non-existing subreddit: {len(str(result_non_existing))}")
-
