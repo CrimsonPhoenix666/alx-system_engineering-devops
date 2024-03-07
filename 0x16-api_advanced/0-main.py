@@ -4,7 +4,7 @@ Test script for the number_of_subscribers function.
 """
 
 if __name__ == "__main__":
-    from subs import number_of_subscribers
+    from 0-subs import number_of_subscribers
 
     # Test with an existing subreddit
     existing_subreddit = "programming"
