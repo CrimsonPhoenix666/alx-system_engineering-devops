@@ -34,8 +34,6 @@ def number_of_subscribers(subreddit):
         return 0
 
 if __name__ == "__main__":
-    from __import__('0-subs').number_of_subscribers
-
     # Test with an existing subreddit
     existing_subreddit = "programming"
     result_existing = number_of_subscribers(existing_subreddit)
@@ -45,3 +43,4 @@ if __name__ == "__main__":
     non_existing_subreddit = "this_is_a_fake_subreddit"
     result_non_existing = number_of_subscribers(non_existing_subreddit)
     print(f"Subscribers for {non_existing_subreddit}: {result_non_existing}")
+
